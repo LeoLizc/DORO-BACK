@@ -6,14 +6,14 @@ const app = express();
 //requiring socket.io Server
 // const { Server } = require('socket.io');
 
+const port = process.env.PORT || 3000;
 server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
 // setting up static files
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
 // setting up port
-const port = process.env.PORT || 3000;
 // setting up socket.io server, and cors service
 
 // const io = new Server(server, {
