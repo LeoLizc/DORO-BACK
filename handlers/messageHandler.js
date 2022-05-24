@@ -1,5 +1,5 @@
 module.exports = function(io, sender){
-    let username = sender.handshake.query.username;
+    // let username = sender.handshake.query.username;
 
     // creating handling functions
     // const onMessage = ({message, to}) => {
@@ -17,9 +17,9 @@ module.exports = function(io, sender){
         
     // };
 
-    const onMessage = ([mensaje]) => {
-        console.log('mesaje', mensaje);
-        sender.broadcast.emit('message', [mensaje]);
+    const onMessage = (mensaje) => {
+        console.log('message', mensaje);
+        sender.broadcast.emit('message', mensaje);
     };
 
     // const onWriting = ({to}) => {
