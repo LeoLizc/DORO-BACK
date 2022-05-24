@@ -47,6 +47,10 @@ const onConnection = (socket) => {
 // setting up socket events
 io.on('connection', onConnection);
 
+socket.on("connect_error", (err) => {
+    console.log(`connect_error due to ${err.message}`);
+});
+
 // setting up app server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
