@@ -19,7 +19,7 @@ module.exports = function(io, sender){
 
     const onMessage = (mensaje) => {
         console.log('message', mensaje);
-        sender.broadcast.emit('message', mensaje);
+        io.emit('message', mensaje);
     };
 
     // const onWriting = ({to}) => {
