@@ -2,10 +2,13 @@
 const express = require('express');
 const app = express();
 // creating http server based on express app
-const server = require('http').createServer(app);
+// const server = require('http').createServer(app);
 //requiring socket.io Server
-const { Server } = require('socket.io');
+// const { Server } = require('socket.io');
 
+server = app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
 
 // setting up static files
 app.use(express.static(__dirname + '/public'));
@@ -13,11 +16,12 @@ app.use(express.static(__dirname + '/public'));
 const port = process.env.PORT || 3000;
 // setting up socket.io server, and cors service
 
-const io = new Server(server, {
-    cors: {
-        origin: `http://localhost:${port}`,
-    },
-});
+// const io = new Server(server, {
+//     cors: {
+//         origin: `http://localhost:${port}`,
+//     },
+// });
+const io = require('socket.io')(server);
 // io.directory = {};
 
 // requiring handlers
@@ -48,6 +52,6 @@ const onConnection = (socket) => {
 io.on('connection', onConnection);
 
 // setting up app server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server running on port ${port}`);
+// });

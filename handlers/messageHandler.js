@@ -18,6 +18,7 @@ module.exports = function(io, sender){
     // };
 
     const onMessage = ([mensaje]) => {
+        console.log('mesaje', mensaje);
         sender.broadcast.emit('message', [mensaje]);
     };
 
