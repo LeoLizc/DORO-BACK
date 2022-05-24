@@ -43,14 +43,14 @@ const onConnection = (socket) => {
     // io.directory[socket.handshake.query.username] = socket.id;
     socket.on('disconnect', onDisconnect);
     messageHandler(io, socket);
+    socket.on("connect_error", (err) => {
+        console.log(`connect_error due to ${err.message}`);
+    });
 };
 
 // setting up socket events
 io.on('connection', onConnection);
 
-socket.on("connect_error", (err) => {
-    console.log(`connect_error due to ${err.message}`);
-});
 
 // setting up app server
 app.listen(port, () => {
