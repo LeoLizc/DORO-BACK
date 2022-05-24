@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/public'));
 const port = process.env.PORT || 3000;
 // setting up socket.io server, and cors service
 
-const io = Server(server, {
+const io = new Server(server, {
     cors: {
         origin: `http://localhost:${port}`,
     },
