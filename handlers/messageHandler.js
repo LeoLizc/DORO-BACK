@@ -1,26 +1,35 @@
+//import database handlers
+const {registerMessage, getMessagesBetweenUsers} = require('./databaseHandlers');
+
 module.exports = function(io, sender){
     // let username = sender.handshake.query.username;
 
     // creating handling functions
-    // const onMessage = ({message, to}) => {
-    //     console.log(message);
-    //     let receiver = io.sockets.sockets[io.directory[to]];
-    //     if (receiver) {
-    //         receiver.emit('message', {
-    //             from: username,
-    //             message,
-    //         });
-    //         sender.emit('received', {user: to});
-    //     }else{
-    //         console.log(`${to} is not online`);
-    //     };
+    const onMessage = async (message, to) => {
+        console.log('message',message, to);
+        let receiver = io.directory[to];
+        if (receiver) {
+            receiver.emit('message', message, sender.userId);
+            // sender.emit('received', {user: to});
+        }else{
+            console.log(`${to} is not online`);
+        };
         
-    // };
+        registerMessage(message, sender.userId, to);
 
-    const onMessage = (mensaje) => {
-        console.log('message', mensaje);
-        io.emit('message', mensaje);
     };
+
+    onAskForMessages = async (to, saveMessages) => {
+        console.log('ask for messages from', sender.userId, to);
+        getMessagesBetweenUsers(sender.userId, to, saveMessages)
+        console.log('save Messages', saveMessages);
+        // saveMessages(['nok']);
+    };
+
+    // const onMessage = (mensaje) => {
+    //     console.log('message', mensaje);
+    //     sender.broadcast.emit('message', mensaje);
+    // };
 
     // const onWriting = ({to}) => {
     //     console.log(username, 'is writing');
@@ -61,6 +70,7 @@ module.exports = function(io, sender){
 
     // setting up sender socket events
     sender.on('message', onMessage);
+    sender.on('askForMessages', onAskForMessages);
     // sender.on('writing', onWriting);
     // sender.on('stopWriting', onStopWriting);
     // sender.on('readMessage', onReadMessage);
